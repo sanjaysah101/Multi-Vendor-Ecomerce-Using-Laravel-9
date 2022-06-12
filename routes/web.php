@@ -36,8 +36,8 @@ Route::get('admin/dashboard', [AdminController::class, 'dashboard']);   // or
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     // Admin Dashboard Login
-    // Route::get('login', [AdminController::class, 'login']);    // or
-    Route::get('login', 'AdminController@login');
+    Route::get('login', [AdminController::class, 'login']);    // or
+    // Route::get('login', 'AdminController@login');
 
     // Admin Dashboard Route
     Route::get('dashboard', [AdminController::class, 'dashboard']);   // or 

@@ -1,0 +1,7 @@
+Use this command when you download a laravel project from github when you encounter error to run project
+
+composer install 
+mv .env.example .env 
+php artisan cache:clear 
+composer dump-autoload 
+php artisan key:generate

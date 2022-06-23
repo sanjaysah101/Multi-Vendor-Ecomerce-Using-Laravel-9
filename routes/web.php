@@ -25,21 +25,34 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 // Admin Login Route without admin group
-Route::get('admin/login', [AdminController::class, 'login']);  
+// Route::get('admin/login', [AdminController::class, 'login']);  
 
 // Admin Dashboard Route without admin group
-Route::get('admin/dashboard', [AdminController::class, 'dashboard']);   // or 
+// Route::get('admin/dashboard', [AdminController::class, 'dashboard']);   // or 
 // Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
 
 
 // or
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-    // Admin Dashboard Login
-    Route::get('login', [AdminController::class, 'login']);    // or
-    // Route::get('login', 'AdminController@login');
+    // // Admin Dashboard Login
+    // Route::get('login', [AdminController::class, 'login']);    // or
+    // // Route::get('login', 'AdminController@login');
+    
+    // // Admin Dashboard Route
+    // // Route::get('dashboard', [AdminController::class, 'dashboard']);   // or 
+    
+    // Route::group(['middleware'=>['admin']],function(){
+        // Route::get('dashboard', [AdminController::class, 'dashboard']);   // or 
+        //     // Route::get('login', 'AdminController@dashboard');
+        
+        // });
+        Route::match(['get','post'], 'login','AdminController@login');
+        
+        Route::group(['middleware'=>['admin']], function(){
+            Route::get('dashboard', 'AdminController@dashboard');
+        // Route::get('dashboard', [AdminController::class, 'dashboard']);   // or 
 
-    // Admin Dashboard Route
-    Route::get('dashboard', [AdminController::class, 'dashboard']);   // or 
+    });
 
 });

@@ -1,33 +1,30 @@
-## Notes about this commit
+# What I did in this commit
+We will register the admin guard every time when an admin logs in and forget it every time when the admin logs out from the admin panel. But first of all, we are required to insert one admin record with the Seeder.
 
-We will configure Guards for Admins, Sub Admins and Vendors and default Web Auth for Users.
+Seeding helps us to insert data into the table from the file and will also help us for future projects to automatically create tables with migration and data with seeding. 
 
-We will also prevent the admin routes including the dashboard from unauthorized access. No one can able to access the admin dashboard and other admin modules without login into the admin panel.  We will use Guards to protect the admin routes including the dashboard route.
+We will create a Seeding for admins table to automatically insert admin data from a file.
 
-We will follow the below steps to set Guards for Admin Panel / Admins.
+## 1) Writing Seeder / Create AdminsTableSeeder file :-
 
-## 1) Update Admin model:-
+First of all, we will generate a seeder and create an AdminsTableSeeder file where we will add record for the admins table.
 
-We will update the Admin model to set the protected guard variable for admin and set other variables as shown in the video. We will also extend the Admin class to Authenticatable.
+Run below artisan command to generate Seeder and create AdminsTableSeeder file:-
+php artisan make:seeder AdminsTableSeeder
 
-## 2) Update auth.php file:-
-We will update the auth.php file located at config\auth.php to set guards for admin to assign session in driver and admins in provider as shown in the video.
+The above command will create AdminsTableSeeder.php file at \database\seeders\
 
-We will also set providers for admins to assign eloquent in driver and Admin class in the model.
+Now open the AdminsTableSeeder file and add a record for admin.
 
-## 3) Create Admin Middleware:-
-Now we will create an Admin Middleware file by running the below command:-
-php artisan make:middleware Admin
+We will generate a hash password for admin by using the Hash::make function as shown in the video.
 
-## 4) Update kernel.php file:-
-Now we will update the kernel.php file located at app\http\ folder to register Admin middleware as global as shown in the video.
+## 2) Update DatabaseSeeder.php file:-
+Now update DatabaseSeeder.php file located at database/seeders/ to add AdminsTableSeeder class as shown in video.
 
-## 5) Update Admin Middleware:- 
-Add Auth:guard check in Admin Middleware to protect the admin routes. This check will be false for now as we have not registered the admin guard yet. 
+## 3) Running Seeder / Run below command:-
+Once you have written your seeder, you may need to regenerate Composer's autoloader using the dump-autoload command:
+composer dump-autoload
 
-Also, include use Auth; at top of Admin Middleware file.
-
-## 6) Update web.php file:-
-Add admin middleware group and move admin dashboard route under it to protect it from unauthorised access.
-
-Now no one can access the admin dashboard without login into the admin panel.  We have used Guards to protect the admin routes including the dashboard route.
+## 4) Run below command:-
+Now run the last command that will finally insert admin record into admins table that we can use for admin login.
+php artisan db:seed

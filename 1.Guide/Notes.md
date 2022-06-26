@@ -1,30 +1,27 @@
 # What I did in this commit
-We will register the admin guard every time when an admin logs in and forget it every time when the admin logs out from the admin panel. But first of all, we are required to insert one admin record with the Seeder.
+I have work on admin login and logout functionality. Register the admin guard every time when an admin logs in and forget it every time when the admin logs out from the admin panel. 
 
-Seeding helps us to insert data into the table from the file and will also help us for future projects to automatically create tables with migration and data with seeding. 
+## 1) Update login.blade.php file:-
+First of all, I had updated the login.blade.php file to update the Login form. We will set its action, CSRF token, the username (email) and password.
 
-We will create a Seeding for admins table to automatically insert admin data from a file.
+## 2) Update login function :-
+Then, I had updated the login function at AdminController. I had added the condition for posted data and use the guard for admin login as shown in the video.
 
-## 1) Writing Seeder / Create AdminsTableSeeder file :-
+You can try login in with username superadmin@admin.com and password 12345 that we have set in the last commit with Seeding.
 
-First of all, we will generate a seeder and create an AdminsTableSeeder file where we will add record for the admins table.
+Once logged in, redirect the user to the Dashboard page and if the username or password is incorrect then redirect back the user and flash the error message on the admin login page.
 
-Run below artisan command to generate Seeder and create AdminsTableSeeder file:-
-php artisan make:seeder AdminsTableSeeder
+## 3) Update header.blade.php file:-
+Remove all unwanted code and add the "Logout" link for the user at the top right side of the header as shown in the video.
 
-The above command will create AdminsTableSeeder.php file at \database\seeders\
+## 4) Create Route:-
+Now create a GET route for Admin Logout in the web.php file like below:-
 
-Now open the AdminsTableSeeder file and add a record for admin.
+// Admin Logout
+Route::get('logout','AdminController@logout'); 
 
-We will generate a hash password for admin by using the Hash::make function as shown in the video.
+## 5) Create logout function:-
+Create a logout function in AdminController in which we will unset the admin guard as shown in the video. 
 
-## 2) Update DatabaseSeeder.php file:-
-Now update DatabaseSeeder.php file located at database/seeders/ to add AdminsTableSeeder class as shown in video.
-
-## 3) Running Seeder / Run below command:-
-Once you have written your seeder, you may need to regenerate Composer's autoloader using the dump-autoload command:
-composer dump-autoload
-
-## 4) Run below command:-
-Now run the last command that will finally insert admin record into admins table that we can use for admin login.
-php artisan db:seed
+## 6) Update login.blade.php file:-
+Update the login.blade.php file to show the error message if the admin user or password is incorrect.
